@@ -120,3 +120,11 @@ footer h6{color:#fff;letter-spacing:.12em;text-transform:uppercase;font-size:12p
 footer ul{list-style:none;font-size:14px;line-height:2.1}footer ul a:hover{color:#fff}
 .fbot{text-align:center;margin-top:46px;padding-top:24px;border-top:1px solid #2e5243;font-size:12.5px;color:#9fb3a3}
 @media(max-width:920px){.left,.right,.cats{display:none}.top{grid-template-columns:auto 1fr auto}.hero h1{font-size:44px}.hero .inner{padding:0 24px}.promo-pill{display:none}.tiles,.grid,.pv{grid-template-columns:1fr 1fr}.detail{grid-template-columns:1fr;gap:28px}.gallery{grid-template-columns:1fr}.thumbs{flex-direction:row}.main-img img{height:460px}.sh h2,.chead h1{font-size:30px}.rtsb{padding:34px}.fc{grid-template-columns:1fr 1fr}}
+
+/* pagination (paginated categories) */
+.pager{flex-wrap:wrap;align-items:center}
+.pager .pg{width:auto;min-width:42px;height:42px;display:inline-flex;align-items:center;justify-content:center;padding:0 15px;border:1.5px solid var(--line);border-radius:30px;color:var(--ink);font-size:14px;transition:.2s;letter-spacing:.02em}
+.pager .pg:hover{border-color:var(--green);color:var(--green)}
+.pager .pg.on{background:var(--green);border-color:var(--green);color:#fff}
+.pager .pg.dots{border:0;min-width:auto;width:auto;padding:0 2px;color:var(--muted)}
+@media(max-width:700px){.pager .pg{min-width:38px;height:38px;padding:0 11px;font-size:13px}}
