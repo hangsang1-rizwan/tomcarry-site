@@ -1,9 +1,8 @@
 name: Deploy to Cloudways
 
-# Auto-deploys on every push to main by calling the Cloudways API to trigger
-# the app's git pull. Uses a Cloudways Access Token (Bearer) — no manual click.
-# Retries on HTTP 422 ("operation already in progress for this server"), which
-# happens when the sibling site on the same server is mid-deploy.
+# Auto-deploys on every push to main: triggers the app's git pull via the
+# Cloudways API, waits for it to finish, then purges Varnish (server-wide) so
+# changes show immediately. Retries on HTTP 422 (shared-server busy).
 
 on:
   push:
@@ -17,31 +16,53 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      CW_TOKEN: ${{ secrets.CLOUDWAYS_API_KEY }}
+      SRV: "1196670"
+      APP: "6730665"
     steps:
-      - name: Trigger Cloudways git pull
-        env:
-          CW_TOKEN: ${{ secrets.CLOUDWAYS_API_KEY }}
+      - name: Trigger git pull, wait, purge Varnish
         run: |
           set -o pipefail
+          OPID=""
           for attempt in 1 2 3 4 5 6 7 8; do
-            echo "Attempt ${attempt}: triggering git pull for app 6730665 (server 1196670)..."
+            echo "Attempt ${attempt}: git pull for app ${APP} (server ${SRV})..."
             HTTP=$(curl -sS -o /tmp/resp.json -w "%{http_code}" --request POST \
               --url "https://api.cloudways.com/api/v1/git/pull" \
               --header "Authorization: Bearer ${CW_TOKEN}" \
               --header "Content-Type: application/x-www-form-urlencoded" \
-              --data-urlencode "server_id=1196670" \
-              --data-urlencode "app_id=6730665" \
+              --data-urlencode "server_id=${SRV}" \
+              --data-urlencode "app_id=${APP}" \
               --data-urlencode "branch_name=main" \
               --data-urlencode "deploy_path=")
             echo "HTTP ${HTTP}"; cat /tmp/resp.json; echo
             if [ "${HTTP}" = "200" ]; then
-              echo "==> Deploy triggered successfully."; exit 0
+              OPID=$(grep -oE '"operation_id"[^0-9]*[0-9]+' /tmp/resp.json | grep -oE '[0-9]+' | head -1)
+              echo "==> Pull triggered (operation_id=${OPID:-unknown})."; break
             fi
-            if [ "${HTTP}" = "422" ]; then
-              echo "Server busy (another deploy in progress). Waiting 30s..."; sleep 30; continue
-            fi
-            echo "::error::Cloudways git pull failed (HTTP ${HTTP}). 401 = token missing Git scope; 404 = Git deployment not set up."
+            if [ "${HTTP}" = "422" ]; then echo "Server busy; waiting 30s..."; sleep 30; continue; fi
+            echo "::error::Cloudways git pull failed (HTTP ${HTTP}). 401=token scope; 404=git not set up."
             exit 1
           done
-          echo "::error::Server stayed busy after 8 attempts."
-          exit 1
+          # Wait for the pull to actually finish applying on the server.
+          if [ -n "${OPID}" ]; then
+            for i in $(seq 1 40); do
+              sleep 10
+              ST=$(curl -sS --url "https://api.cloudways.com/api/v1/operation/${OPID}" \
+                    --header "Authorization: Bearer ${CW_TOKEN}")
+              echo "op ${i}: $(echo "${ST}" | head -c 160)"
+              echo "${ST}" | grep -qE '"is_completed":"?1' && { echo "==> Pull completed."; break; }
+            done
+          else
+            echo "No operation id; waiting 180s for pull to apply..."; sleep 180
+          fi
+          # Purge Varnish (server-wide: clears every app on this server).
+          PH=$(curl -sS -o /tmp/purge.json -w "%{http_code}" --request POST \
+            --url "https://api.cloudways.com/api/v1/service/varnish" \
+            --header "Authorization: Bearer ${CW_TOKEN}" \
+            --header "Content-Type: application/x-www-form-urlencoded" \
+            --data-urlencode "server_id=${SRV}" \
+            --data-urlencode "action=purge")
+          echo "Varnish purge HTTP ${PH}"; cat /tmp/purge.json; echo
+          # Purge is best-effort; a non-200 here does not fail the deploy.
+          exit 0
