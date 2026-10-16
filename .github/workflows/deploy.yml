@@ -1,0 +1,39 @@
+name: Deploy to Cloudways
+
+# Auto-deploys on every push to main by calling the Cloudways API to trigger
+# the app's git pull. Uses a Cloudways Access Token (Bearer) — no manual click.
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+concurrency:
+  group: cloudways-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Cloudways git pull
+        env:
+          CW_TOKEN: ${{ secrets.CLOUDWAYS_API_KEY }}
+        run: |
+          set -o pipefail
+          echo "Triggering Cloudways git pull for app 6730665 (server 1196670)..."
+          HTTP=$(curl -sS -o /tmp/resp.json -w "%{http_code}" --request POST \
+            --url "https://api.cloudways.com/api/v1/git/pull" \
+            --header "Authorization: Bearer ${CW_TOKEN}" \
+            --header "Content-Type: application/x-www-form-urlencoded" \
+            --data-urlencode "server_id=1196670" \
+            --data-urlencode "app_id=6730665" \
+            --data-urlencode "branch_name=main" \
+            --data-urlencode "deploy_path=")
+          echo "HTTP ${HTTP}"
+          echo "Response:"; cat /tmp/resp.json; echo
+          if [ "${HTTP}" != "200" ]; then
+            echo "::error::Cloudways git pull failed (HTTP ${HTTP}). A 401 usually means the Access Token lacks the 'Git' scope; a 404 that Git deployment isn't set up on the app yet."
+            exit 1
+          fi
+          echo "==> Deploy triggered successfully."

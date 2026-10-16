@@ -1,0 +1,122 @@
+/* Jhon Peters — design system (green boutique) */
+:root{--green:#bd8085;--green-d:#8f5d63;--cream:#fbf3f0;--sand:#f3e6e1;--terra:#c07a84;--gold:#c3a06a;--ink:#2e2729;--muted:#9c8e8b;--line:#efe2de}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Jost',sans-serif;color:var(--ink);background:#fff;line-height:1.6}
+.f{font-family:'Cormorant Garamond',serif}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+.wrap{max-width:1300px;margin:0 auto;padding:0 26px}
+.ann{background:var(--green-d);color:#f4ecdd;text-align:center;padding:10px;font-size:12.5px;letter-spacing:.06em}
+/* header */
+header{position:sticky;top:0;z-index:40;background:#fff;border-bottom:1px solid var(--line)}
+.top{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;height:82px}
+.left,.right{display:flex;gap:22px;font-size:13px;color:#595244}.right{justify-content:flex-end}
+.left a,.right a:hover{color:var(--green)}
+.logo{display:flex;align-items:center;justify-content:center;gap:12px}
+.logo .mk{width:44px;height:44px;border-radius:50%;background:radial-gradient(circle at 36% 30%,#d49aa0,#8f5d63);display:grid;place-items:center;color:#fff2ee;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:17px;line-height:1;letter-spacing:.05em;text-align:center;border:1.5px solid var(--gold)}
+.logo .wm{font-family:'Cormorant Garamond',serif;font-size:29px;font-weight:600;letter-spacing:.03em;color:var(--green-d)}
+.catbar{border-top:1px solid var(--line)}
+.cats{display:flex;justify-content:center;gap:32px;padding:12px 0;font-size:14px;letter-spacing:.03em;border-top:1px solid var(--line)}
+.cats a{color:#4a4538;padding:3px 0}.cats a:hover,.cats a.on{color:var(--green)}.cats a.sale{color:var(--terra)}
+.crumb{padding:22px 0;font-size:13px;color:var(--muted)}.crumb a:hover{color:var(--green)}
+/* buttons */
+.btn{display:inline-block;background:var(--green);color:#fff;padding:15px 38px;border-radius:40px;letter-spacing:.08em;font-size:13.5px;font-weight:500;transition:.2s;cursor:pointer}
+.btn:hover{background:var(--green-d)}
+.btn.o{background:transparent;color:var(--green-d);border:1.5px solid var(--green-d);margin-left:10px}
+.btn.o:hover{background:var(--green-d);color:#fff}
+/* hero (home) */
+.hero{position:relative;height:600px;overflow:hidden;background:var(--sand)}
+.hero>img{width:100%;height:100%;object-fit:cover;filter:brightness(.92)}
+.hero .box{position:absolute;inset:0;display:flex;align-items:center;background:linear-gradient(100deg,rgba(251,243,240,.95) 16%,rgba(251,243,240,.5) 44%,rgba(251,243,240,0) 66%)}
+.hero .inner{padding-left:2%;max-width:620px}
+.hero .eye{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:26px;color:var(--terra);margin-bottom:6px}
+.hero h1{font-family:'Cormorant Garamond',serif;font-size:72px;font-weight:600;line-height:.98;color:var(--green-d)}
+.hero p{margin:16px 0 26px;font-size:17px;max-width:420px;color:#5a5345}
+.promo-pill{position:absolute;right:6%;top:50%;transform:translateY(-50%);background:#fff;border:2px dashed var(--terra);border-radius:16px;padding:26px 32px;text-align:center;box-shadow:0 20px 50px rgba(40,30,20,.14)}
+.promo-pill .big{font-family:'Cormorant Garamond',serif;font-size:50px;font-weight:700;color:var(--terra);line-height:1}
+.promo-pill h4{font-weight:500;margin:6px 0 2px;font-size:16px}.promo-pill span{font-size:12.5px;color:var(--muted)}
+.promo-pill code{display:inline-block;margin-top:10px;background:var(--cream);border:1px dashed var(--gold);border-radius:6px;padding:5px 12px;font-family:monospace;font-weight:600;color:var(--green-d)}
+/* sections + headings */
+.sec{padding:78px 0}
+.sh{text-align:center;margin-bottom:42px}
+.sh .k{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--terra);font-size:20px;margin-bottom:6px}
+.sh h2{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:600;color:var(--green-d)}
+.sh a{display:inline-block;margin-top:12px;color:var(--green);letter-spacing:.06em;font-size:13.5px;border-bottom:1px solid var(--green);padding-bottom:2px}
+/* category tiles */
+.tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.tile{position:relative;height:360px;border-radius:14px;overflow:hidden}
+.tile img{width:100%;height:100%;object-fit:cover;transition:.6s}.tile:hover img{transform:scale(1.06)}
+.tile .ov{position:absolute;inset:0;background:linear-gradient(transparent 45%,rgba(27,67,50,.6));display:flex;align-items:flex-end;padding:24px}
+.tile h3{font-family:'Cormorant Garamond',serif;color:#fff;font-size:25px;font-weight:600}
+/* product cards (grids) */
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px}
+.card .ph{position:relative;height:400px;border-radius:12px;overflow:hidden;background:var(--cream);margin-bottom:13px}
+.card .ph img{width:100%;height:100%;object-fit:cover;transition:.6s}.card:hover .ph img{transform:scale(1.05)}
+.card .badge{position:absolute;top:13px;left:13px;background:var(--terra);color:#fff;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;padding:5px 11px;border-radius:30px}
+.card .rts{position:absolute;bottom:13px;left:13px;background:rgba(255,255,255,.95);color:var(--green);font-size:10.5px;font-weight:600;padding:5px 10px;border-radius:30px}
+.card .wish{position:absolute;top:11px;right:12px;width:32px;height:32px;background:#fff;border-radius:50%;display:grid;place-items:center;color:var(--terra)}
+.card h4{font-size:14.5px;font-weight:400;color:#3f3a2f;line-height:1.4}
+.card .pr{margin-top:5px}.card .pr b{color:var(--green-d);font-weight:600}.card .pr s{color:var(--muted);margin-left:7px;font-weight:300}
+/* ready-to-ship banner */
+.rtsb{background:var(--green-d);color:#f2ead9;border-radius:20px;padding:56px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;max-width:1300px;margin:0 auto}
+.rtsb .f{font-size:38px;color:#fff;line-height:1.05}.rtsb p{opacity:.85;margin-top:8px}
+.rtsb .btn{background:#fff;color:var(--green-d)}.rtsb .btn:hover{background:var(--cream)}
+/* perks */
+.perks{background:var(--cream);text-align:center;padding:78px 26px;margin-top:78px}
+.perks .f{font-size:40px;color:var(--green-d)}
+.perks p{color:#5a5345;max-width:520px;margin:12px auto 24px}
+.perks .nl{display:flex;max-width:460px;margin:0 auto;gap:10px}
+.perks input{flex:1;padding:14px 18px;border:1.5px solid var(--line);border-radius:40px;font-family:inherit;outline:0}
+.pv{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1000px;margin:40px auto 0}
+.pv div .f{font-size:22px}.pv div{font-size:13px;color:var(--muted)}.pv .ic{font-size:26px;margin-bottom:6px}
+/* product detail */
+.detail{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;padding-bottom:40px}
+.gallery{display:grid;grid-template-columns:70px 1fr;gap:14px}
+.thumbs{display:flex;flex-direction:column;gap:12px}
+.thumbs img{width:70px;height:90px;object-fit:cover;border-radius:8px;border:1.5px solid var(--line);cursor:pointer}
+.thumbs img.on{border-color:var(--green)}
+.main-img{border-radius:16px;overflow:hidden;background:var(--cream)}
+.main-img img{width:100%;height:620px;object-fit:cover}
+.info .brand{letter-spacing:.14em;text-transform:uppercase;font-size:12px;color:var(--gold);margin-bottom:8px}
+.info h1{font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:600;line-height:1.15;color:var(--green-d)}
+.price{display:flex;align-items:baseline;gap:12px;margin:14px 0}
+.price .now{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:600;color:var(--green-d)}
+.price s{color:var(--muted);font-size:19px}.price .save{background:var(--terra);color:#fff;font-size:12px;padding:4px 11px;border-radius:30px}
+.info .rts{display:inline-flex;align-items:center;gap:8px;background:#e8f3ec;color:var(--green);padding:9px 15px;border-radius:30px;font-size:13.5px;font-weight:500;margin:6px 0 20px}
+.opt{margin:18px 0}.opt label{display:block;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#5a5345;margin-bottom:10px}
+.swatch{display:flex;gap:10px;flex-wrap:wrap}
+.swatch button{min-width:46px;height:42px;padding:0 14px;border:1.5px solid var(--line);background:#fff;border-radius:9px;font-family:inherit;font-size:14px;cursor:pointer}
+.swatch button.on{border-color:var(--green);background:var(--green);color:#fff}
+.addrow{display:flex;gap:12px;margin:24px 0 14px}
+.qty{display:flex;align-items:center;border:1.5px solid var(--line);border-radius:40px}
+.qty button{width:44px;height:52px;background:none;border:0;font-size:20px;cursor:pointer;color:var(--green-d)}
+.qty span{width:30px;text-align:center}
+.add{flex:1;background:var(--green);color:#fff;border:0;border-radius:40px;font-family:inherit;font-size:15px;font-weight:500;letter-spacing:.04em;cursor:pointer}
+.add:hover{background:var(--green-d)}
+.wishbtn{width:52px;border:1.5px solid var(--line);border-radius:50%;background:#fff;color:var(--terra);font-size:18px;cursor:pointer}
+.trust{display:flex;gap:22px;flex-wrap:wrap;font-size:13px;color:#5a5345;margin:18px 0;padding:16px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.acc{border-bottom:1px solid var(--line);padding:16px 0}
+.acc summary{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:600;color:var(--green-d);cursor:pointer;list-style:none;display:flex;justify-content:space-between}
+.acc summary::after{content:'+';color:var(--gold)}.acc[open] summary::after{content:'–'}
+.acc p{margin-top:12px;color:#5a5345;font-size:14.5px}.acc ul{margin:10px 0 0 18px;color:#5a5345;font-size:14.5px}
+/* category page */
+.chead{background:var(--cream);text-align:center;padding:52px 26px}
+.chead .crumb{font-size:13px;color:var(--muted);margin-bottom:12px}
+.chead h1{font-family:'Cormorant Garamond',serif;font-size:46px;font-weight:600;color:var(--green-d)}
+.chead p{color:#5a5345;max-width:640px;margin:12px auto 0}
+.bar{display:flex;align-items:center;justify-content:space-between;padding:22px 0;border-bottom:1px solid var(--line);flex-wrap:wrap;gap:12px}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{border:1.5px solid var(--line);border-radius:30px;padding:8px 16px;font-size:13px;cursor:pointer}.chip.on{border-color:var(--green);background:var(--green);color:#fff}
+.bar .r{display:flex;align-items:center;gap:14px;font-size:13.5px;color:#5a5345}
+.bar select{border:1.5px solid var(--line);border-radius:8px;padding:9px 12px;font-family:inherit;background:#fff}
+.pager{display:flex;justify-content:center;gap:8px;padding:20px 0 70px}
+.pager a{width:42px;height:42px;display:grid;place-items:center;border:1.5px solid var(--line);border-radius:9px;font-size:14px}.pager a.on{background:var(--green);color:#fff;border-color:var(--green)}
+.card .stars{color:var(--gold);font-size:12px;margin-top:3px}
+/* footer */
+footer{background:var(--green-d);color:#cdbfa6;padding:66px 0 28px;margin-top:20px}
+.fc{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px}
+footer .wm{font-family:'Cormorant Garamond',serif;font-size:30px;color:#fff;margin-bottom:12px}
+footer h6{color:#fff;letter-spacing:.12em;text-transform:uppercase;font-size:12px;margin-bottom:14px}
+footer ul{list-style:none;font-size:14px;line-height:2.1}footer ul a:hover{color:#fff}
+.fbot{text-align:center;margin-top:46px;padding-top:24px;border-top:1px solid #2e5243;font-size:12.5px;color:#9fb3a3}
+@media(max-width:920px){.left,.right,.cats{display:none}.top{grid-template-columns:auto 1fr auto}.hero h1{font-size:44px}.hero .inner{padding:0 24px}.promo-pill{display:none}.tiles,.grid,.pv{grid-template-columns:1fr 1fr}.detail{grid-template-columns:1fr;gap:28px}.gallery{grid-template-columns:1fr}.thumbs{flex-direction:row}.main-img img{height:460px}.sh h2,.chead h1{font-size:30px}.rtsb{padding:34px}.fc{grid-template-columns:1fr 1fr}}
